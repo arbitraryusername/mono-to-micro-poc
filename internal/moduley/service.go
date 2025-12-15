@@ -22,7 +22,7 @@ func (s *Service) Compute(_ context.Context, input string) (string, error) {
 		return "", fmt.Errorf("moduley: empty input")
 	}
 
-	transformed := fmt.Sprintf("y-core[%s]", strings.ToUpper(input))
+	transformed := strings.ToUpper(input)
 	return transformed, nil
 }
 

@@ -21,15 +21,12 @@ func NewService(y ports.ModuleYPort) *Service {
 
 // Execute demonstrates orchestration across Module X and Module Y.
 func (s *Service) Execute(ctx context.Context, input string) (string, error) {
-	prep := fmt.Sprintf("x-pre(%s)", input)
-
-	resultFromY, err := s.y.Compute(ctx, prep)
+	resultFromY, err := s.y.Compute(ctx, input)
 	if err != nil {
 		return "", fmt.Errorf("modulex: module y call failed: %w", err)
 	}
 
-	response := fmt.Sprintf("%s -> %s -> x-post", prep, resultFromY)
-	return response, nil
+	return resultFromY, nil
 }
 
 // AiGen END
