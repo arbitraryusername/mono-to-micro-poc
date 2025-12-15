@@ -24,14 +24,14 @@ func main() {
 		log.Fatalf("configure module y: %v", err)
 	}
 
-	moduleX := modulex.NewService(yAdapter)
-
 	mux := http.NewServeMux()
 	mux.HandleFunc("/x", func(w http.ResponseWriter, r *http.Request) {
 		input := r.URL.Query().Get("input")
 		if input == "" {
 			input = "demo"
 		}
+
+		moduleX := modulex.NewService(yAdapter)
 
 		result, err := moduleX.Execute(r.Context(), input)
 		if err != nil {
@@ -43,9 +43,13 @@ func main() {
 		_, _ = w.Write([]byte(result))
 	})
 
-	log.Println("xserver listening on port 8001")
+	addr := os.Getenv("XSERVER_ADDR")
+	if addr == "" {
+		log.Fatalf("XSERVER_ADDR environment variable must be set")
+	}
 
-	if err := http.ListenAndServe(":8001", mux); err != nil {
+	log.Printf("xserver listening on %s", addr)
+	if err := http.ListenAndServe(addr, mux); err != nil {
 		log.Fatalf("server error: %v", err)
 	}
 }
@@ -61,7 +65,7 @@ func buildModuleYAdapter() (ports.ModuleYPort, error) {
 		}
 
 		httpClient := &http.Client{
-			Timeout: 5 * time.Second,
+			Timeout: 1000 * time.Second, // very large timeout to account for stopping on breadpoints
 		}
 
 		return moduley_remote.NewAdapter(baseURL, httpClient), nil

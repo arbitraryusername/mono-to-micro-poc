@@ -7,10 +7,11 @@ import (
 	"net/http"
 	"os"
 
-	"connectrpc.com/connect"
 	moduleyv1 "gen-poc/gen/moduley/v1"
 	moduleyv1connect "gen-poc/gen/moduley/v1/moduleyv1connect"
 	"gen-poc/internal/moduley"
+
+	"connectrpc.com/connect"
 )
 
 // main starts Module Y's ConnectRPC server.
@@ -24,7 +25,7 @@ func main() {
 
 	addr := os.Getenv("YSERVER_ADDR")
 	if addr == "" {
-		addr = ":8081"
+		log.Fatalf("YSERVER_ADDR environment variable must be set")
 	}
 
 	log.Printf("yserver listening on %s", addr)
