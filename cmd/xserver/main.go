@@ -33,8 +33,10 @@ func main() {
 		_, _ = w.Write([]byte(result))
 	})
 
-	log.Println("xserver listening on :8080")
-	if err := http.ListenAndServe(":8080", mux); err != nil {
+	log.Println("xserver listening on port 8001")
+
+	err := http.ListenAndServe(":8001", mux)
+	if err != nil {
 		log.Fatalf("server error: %v", err)
 	}
 }
