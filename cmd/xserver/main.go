@@ -3,17 +3,27 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"strings"
+	"time"
 
 	"gen-poc/internal/adapters/moduley_local"
+	"gen-poc/internal/adapters/moduley_remote"
 	"gen-poc/internal/modulex"
 	"gen-poc/internal/moduley"
+	"gen-poc/internal/ports"
 )
 
+// main bootstraps Module X's HTTP surface and selects the Module Y adapter.
 func main() {
-	moduleY := moduley.NewService()
-	yAdapter := moduley_local.NewAdapter(moduleY)
+	yAdapter, err := buildModuleYAdapter()
+	if err != nil {
+		log.Fatalf("configure module y: %v", err)
+	}
+
 	moduleX := modulex.NewService(yAdapter)
 
 	mux := http.NewServeMux()
@@ -35,9 +45,29 @@ func main() {
 
 	log.Println("xserver listening on port 8001")
 
-	err := http.ListenAndServe(":8001", mux)
-	if err != nil {
+	if err := http.ListenAndServe(":8001", mux); err != nil {
 		log.Fatalf("server error: %v", err)
+	}
+}
+
+// buildModuleYAdapter chooses the Module Y adapter based on configuration.
+func buildModuleYAdapter() (ports.ModuleYPort, error) {
+	mode := strings.ToLower(os.Getenv("MODULEY_MODE"))
+	switch mode {
+	case "remote":
+		baseURL := os.Getenv("MODULEY_URL")
+		if baseURL == "" {
+			return nil, fmt.Errorf("MODULEY_URL required when MODULEY_MODE=remote")
+		}
+
+		httpClient := &http.Client{
+			Timeout: 5 * time.Second,
+		}
+
+		return moduley_remote.NewAdapter(baseURL, httpClient), nil
+	default:
+		moduleY := moduley.NewService()
+		return moduley_local.NewAdapter(moduleY), nil
 	}
 }
 

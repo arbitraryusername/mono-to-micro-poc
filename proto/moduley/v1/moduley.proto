@@ -1,0 +1,20 @@
+// AiGen START
+syntax = "proto3";
+
+package moduley.v1;
+
+option go_package = "gen-poc/gen/moduley/v1;moduleyv1";
+
+service ModuleYService {
+  rpc Compute(ComputeRequest) returns (ComputeResponse);
+}
+
+message ComputeRequest {
+  string input = 1;
+}
+
+message ComputeResponse {
+  string output = 1;
+}
+// AiGen END
+
