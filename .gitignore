@@ -4,9 +4,6 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
-
 # Go workspace file
 go.work
 
@@ -47,12 +44,6 @@ temp/
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-# Protocol buffer generated files (uncomment if you don't want to track generated code)
-# gen/
-
-# Air live reload tool
-tmp/
 
 # Delve debugger
 debug
