@@ -4,11 +4,13 @@ package moduley_remote
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 
-	"connectrpc.com/connect"
 	moduleyv1 "gen-poc/gen/moduley/v1"
 	moduleyv1connect "gen-poc/gen/moduley/v1/moduleyv1connect"
+
+	"connectrpc.com/connect"
 )
 
 // Adapter invokes Module Y via ConnectRPC.
@@ -28,6 +30,8 @@ func NewAdapter(baseURL string, httpClient *http.Client, opts ...connect.ClientO
 
 // Compute converts the domain call into a ConnectRPC invocation.
 func (a *Adapter) Compute(ctx context.Context, input string) (string, error) {
+	log.Printf("[REMOTE_ADAPTER] Starting RPC Compute call with input=%q", input)
+
 	req := connect.NewRequest(&moduleyv1.ComputeRequest{Input: input})
 
 	resp, err := a.client.Compute(ctx, req)

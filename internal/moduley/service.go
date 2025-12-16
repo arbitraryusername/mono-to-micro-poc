@@ -5,6 +5,7 @@ package moduley
 import (
 	"context"
 	"fmt"
+	"log"
 	"strings"
 )
 
@@ -18,6 +19,7 @@ func NewService() *Service {
 
 // Compute applies Module Y-specific rules to the input.
 func (s *Service) Compute(_ context.Context, input string) (string, error) {
+	log.Printf("[MODULEY] Compute called with input=%q", input)
 	if input == "" {
 		return "", fmt.Errorf("moduley: empty input")
 	}

@@ -4,8 +4,8 @@ package moduley_local
 
 import (
 	"context"
-
 	"gen-poc/internal/moduley"
+	"log"
 )
 
 // Adapter bridges Module X to the local Module Y implementation.
@@ -20,6 +20,7 @@ func NewAdapter(svc *moduley.Service) *Adapter {
 
 // Compute proxies calls into Module Y.
 func (a *Adapter) Compute(ctx context.Context, input string) (string, error) {
+	log.Printf("[LOCAL_ADAPTER] Starting Compute call with input=%q", input)
 	return a.svc.Compute(ctx, input)
 }
 
