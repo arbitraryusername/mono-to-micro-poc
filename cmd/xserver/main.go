@@ -64,8 +64,9 @@ func buildModuleYAdapter() (ports.ModuleYPort, error) {
 			return nil, fmt.Errorf("MODULEY_URL required when MODULEY_MODE=remote")
 		}
 
+		// TODO: this doesn't have any retry or circuit breaker, etc that would be needed for a real deployed environment
 		httpClient := &http.Client{
-			Timeout: 1000 * time.Second, // very large timeout to account for stopping on breadpoints
+			Timeout: 1000 * time.Second, // very large timeout to account for stopping on breakpoints
 		}
 
 		return moduley_remote.NewAdapter(baseURL, httpClient), nil
