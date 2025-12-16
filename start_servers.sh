@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# make this executable: chmod +x start_servers.sh
+
 # Start yserver
 YSERVER_ADDR=":8002" ./yserver &
 YSERVER_PID=$!
