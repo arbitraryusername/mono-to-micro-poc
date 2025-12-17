@@ -41,6 +41,8 @@ type rpcHandler struct {
 
 // Compute satisfies the ConnectRPC handler interface by delegating to Module Y.
 func (h *rpcHandler) Compute(ctx context.Context, req *connect.Request[moduleyv1.ComputeRequest]) (*connect.Response[moduleyv1.ComputeResponse], error) {
+	log.Printf("RPC endpoipnt handler started: input=%s", req.Msg.GetInput())
+
 	result, err := h.svc.Compute(ctx, req.Msg.GetInput())
 	if err != nil {
 		return nil, err
