@@ -1,4 +1,8 @@
 // AiGen START
+
+// below is the build tag for remote mode (two running binaries with RPC communication)
+//go:build remote
+
 package moduley_remote
 
 import (
