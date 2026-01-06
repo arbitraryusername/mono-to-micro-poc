@@ -20,7 +20,7 @@ graph TB
         adapter --> moduley
     end
     
-    client --> http
+    client --> binary
     
     note3 ~~~ client
     note1 ~~~ client
@@ -38,5 +38,6 @@ graph TB
     style note3 fill:#FAA,stroke:#e65100,stroke-width:1px,stroke-dasharray: 5 5,color:#000000
     
     linkStyle 0,1,2,3 stroke:#000000,stroke-width:2px
+    linkStyle 4 stroke:#70cc90,stroke-width:2px
 
 ```

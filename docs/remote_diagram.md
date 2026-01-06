@@ -21,7 +21,7 @@ graph TB
         moduley["ModuleY Service<br/>Business Logic<br/>strings.ToUpper()"]
     end
 
-    client --> http
+    client --> binary1
 
     note3 ~~~ client
     note1 ~~~ client
@@ -30,7 +30,7 @@ graph TB
     http --> modulex
     modulex --> port
     port --> adapter
-    adapter -- "MODULEY_URL<br/>http://localhost:9090" --> grpc
+    adapter -- "MODULEY_URL<br/>http://localhost:9090" --> binary2
     grpc --> rpcHandler
     rpcHandler --> moduley
 
@@ -49,5 +49,7 @@ graph TB
     style note2 fill:#89C,stroke:#e65100,stroke-width:1px,stroke-dasharray: 5 5,color:#000000
     style note3 fill:#89C,stroke:#e65100,stroke-width:1px,stroke-dasharray: 5 5,color:#000000
 
-    linkStyle 4,5,6,7,8,9 stroke:#000000,stroke-width:2px
+    linkStyle 0 stroke:#70cc90,stroke-width:2px
+    linkStyle 7 stroke:#70cc90,stroke-width:2px
+    linkStyle 4,5,6,8,9 stroke:#000000,stroke-width:2px
 ```
