@@ -3,18 +3,11 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
-	"strings"
-	"time"
 
-	"gen-poc/internal/adapters/moduley_local"
-	"gen-poc/internal/adapters/moduley_remote"
 	"gen-poc/internal/modulex"
-	"gen-poc/internal/moduley"
-	"gen-poc/internal/ports"
 )
 
 // main bootstraps Module X's HTTP surface and selects the Module Y adapter.
@@ -54,26 +47,7 @@ func main() {
 	}
 }
 
-// buildModuleYAdapter chooses the Module Y adapter based on configuration.
-func buildModuleYAdapter() (ports.ModuleYPort, error) {
-	mode := strings.ToLower(os.Getenv("MODULEY_MODE"))
-	switch mode {
-	case "remote":
-		baseURL := os.Getenv("MODULEY_URL")
-		if baseURL == "" {
-			return nil, fmt.Errorf("MODULEY_URL required when MODULEY_MODE=remote")
-		}
-
-		// TODO: this doesn't have any retry or circuit breaker, etc that would be needed for a real deployed environment
-		httpClient := &http.Client{
-			Timeout: 1000 * time.Second, // very large timeout to account for stopping on breakpoints
-		}
-
-		return moduley_remote.NewAdapter(baseURL, httpClient), nil
-	default:
-		moduleY := moduley.NewService()
-		return moduley_local.NewAdapter(moduleY), nil
-	}
-}
+// buildModuleYAdapter is implemented in adapter_local.go or adapter_remote.go
+// depending on the build tag used (-tags=local or -tags=remote).
 
 // AiGen END

@@ -1,5 +1,9 @@
 // File: internal/adapters/moduley_local/adapter.go
 // AiGen START
+
+// below is the build tag for local mode (all code runs in a single binary)
+//go:build local
+
 package moduley_local
 
 import (
