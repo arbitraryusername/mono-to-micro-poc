@@ -1,8 +1,8 @@
 ```mermaid
 graph TB
-    note3["Deployment:<br/>Two processes"]
-    note1["Build Command:<br/>go build -tags=remote"]
-    note2["Communication:<br/>gRPC"]
+    note3(["Deployment:<br/>Two processes"])
+    note1(["Build Command:<br/>go build -tags=remote"])
+    note2(["Communication:<br/>gRPC"])
 
     client["Client<br/>HTTP Request"]
 

@@ -1,8 +1,8 @@
 ```mermaid
 graph TB
-    note3["Deployment:<br/>Single process"]
-    note1["Build Command:<br/>go build -tags=local"]
-    note2["Communication:<br/>Direct function calls"]
+    note3(["Deployment:<br/>Single process"])
+    note1(["Build Command:<br/>go build -tags=local"])
+    note2(["Communication:<br/>Direct function calls"])
     
     client["Client<br/>HTTP Request"]
     
